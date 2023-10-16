@@ -79,7 +79,6 @@ func insertWardToMappingTable(db *gorm.DB, listWardDataAll []Ward, listDistrictD
 		}
 	}
 	fmt.Println("Data has been written to the file.")
-	fmt.Println(len(listWardDataAll))
 
 	return nil
 }

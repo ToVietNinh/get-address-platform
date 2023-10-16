@@ -664,4 +664,4 @@ INSERT INTO shipping_provider_district_mappings (shipping_provider_id, district_
 (7, 9606, '1922'),
 (7, 9607, '1783'),
 (7, 9608, '1883'),
-(7, 9609, '2186'),
+(7, 9609, '2186');

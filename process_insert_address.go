@@ -48,6 +48,7 @@ func ProcessInsertAddressInDatabase() {
 		listDistrictDataOfProvinceItem := responseGetDistrict.Data
 		listDistrictDataAll = append(listDistrictDataAll, listDistrictDataOfProvinceItem...)
 	}
+
 	// API get list ward of GHN
 	var listWardDataAll []Ward
 	for _, item := range listDistrictDataAll {

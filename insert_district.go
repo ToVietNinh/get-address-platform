@@ -44,8 +44,6 @@ func insertDistrictToMappingTable(db *gorm.DB, listDistrictDataAll []District, l
 				queryItem := fmt.Sprintf(`(7, %d, '%d'),`, item.ID, item1.DistrictID)
 				queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
 			}
-			fmt.Println(fmt.Sprintf("%s-%s", item1.DistrictName, cityIDToNameMapper[int64(item1.ProvinceID)]))
-			fmt.Println(fmt.Sprintf("%s-%s", item.Name, item.CityName))
 		}
 	}
 
@@ -67,7 +65,6 @@ func insertDistrictToMappingTable(db *gorm.DB, listDistrictDataAll []District, l
 		}
 	}
 	fmt.Println("Data has been written to the file.")
-	fmt.Println(len(listDistrictDataAll))
 
 	return nil
 }
