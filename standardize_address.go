@@ -62,3 +62,17 @@ func standardizeDistrictName(name string) string {
 
 	return standardizedName
 }
+
+func standardizeWardName(name string) string {
+	// Define a regular expression pattern for ward names
+	regex := regexp.MustCompile(`(Phường|Xã|P|p|X|x|XP|xp|Xp)\s+`)
+
+	// Replace matched patterns with an empty string
+	standardizedName := regex.ReplaceAllString(name, "")
+
+	standardizedName = strings.ToLower(standardizedName)
+
+	standardizedName = removeVietnameseDiacritics(standardizedName)
+
+	return standardizedName
+}

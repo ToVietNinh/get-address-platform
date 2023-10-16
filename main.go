@@ -7,8 +7,5 @@ const (
 )
 
 func main() {
-
 	ProcessInsertAddressInDatabase()
-	// MatchNameRegex()
-
 }
