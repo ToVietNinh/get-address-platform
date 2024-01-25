@@ -35,19 +35,19 @@ func insertDistrictToMappingTable(db *gorm.DB, listDistrictDataAll []District, l
 	}
 
 	var queryCommandToInsertAddress []string
-	queryItem := `INSERT INTO shipping_provider_district_mappings (shipping_provider_id, district_id, provider_district_key) VALUES`
+	queryItem := `INSERT INTO shipping_provider_district_mappings (shipping_provider_id, shipping_provider_code, district_id, provider_district_key) VALUES`
 	queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
 
 	for _, item := range resultMyAddress {
 		for _, item1 := range listDistrictDataAll {
 			if fmt.Sprintf("%s-%s", standardizeDistrictName(item1.DistrictName), standardizeProvinceName(cityIDToNameMapper[int64(item1.ProvinceID)])) == fmt.Sprintf("%s-%s", standardizeDistrictName(item.Name), standardizeProvinceName(item.CityName)) {
-				queryItem := fmt.Sprintf(`(7, %d, '%d'),`, item.ID, item1.DistrictID)
+				queryItem := fmt.Sprintf(`(7, 'GHN', %d, '%d'),`, item.ID, item1.DistrictID)
 				queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
+				fmt.Println(queryCommandToInsertAddress)
 			}
 		}
 	}
-
-	fileName := "GHN_district_mapping.txt"
+	fileName := "GHN_live_mapping_district"
 
 	// Open the file for writing. Create the file if it doesn't exist or truncate it if it does.
 	file, err := os.Create(fileName)

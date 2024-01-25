@@ -47,21 +47,21 @@ func insertWardToMappingTable(db *gorm.DB, listWardDataAll []Ward, listDistrictD
 	}
 
 	var queryCommandToInsertAddress []string
-	queryItem := `INSERT INTO shipping_provider_ward_mappings (shipping_provider_id, ward_id, provider_ward_key) VALUES`
+	queryItem := `INSERT INTO shipping_provider_ward_mappings (shipping_provider_id, shipping_provider_code, ward_id, provider_ward_key) VALUES`
 	queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
 
 	for _, item := range resultMyAddress {
 		for _, itemGHN := range listWardDataAll {
-			fmt.Println(standardizeProvinceName(cityIDToNameMapper[districtIDToCityID[int64(itemGHN.DistrictID)]]))
 			if fmt.Sprintf("%s-%s-%s", standardizeWardName(itemGHN.WardName), standardizeDistrictName(districtIDToNameMapper[int64(itemGHN.DistrictID)]), standardizeProvinceName(cityIDToNameMapper[districtIDToCityID[int64(itemGHN.DistrictID)]])) ==
 				fmt.Sprintf("%s-%s-%s", standardizeWardName(item.Name), standardizeDistrictName(item.DistrictName), standardizeProvinceName(item.CityName)) {
-				queryItem := fmt.Sprintf(`(7, %d, '%s'),`, item.ID, itemGHN.WardCode)
+				queryItem := fmt.Sprintf(`(7, 'GHN', %d, '%s'),`, item.ID, itemGHN.WardCode)
 				queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
+				fmt.Println("Inprogress")
 			}
 		}
 	}
 
-	fileName := "GHN_ward_mapping.txt"
+	fileName := "GHN_live_mapping_ward"
 
 	// Open the file for writing. Create the file if it doesn't exist or truncate it if it does.
 	file, err := os.Create(fileName)

@@ -16,14 +16,14 @@ func ProcessInsertAddressInDatabase() {
 	}
 
 	requestBodyForGetProvince := map[string]interface{}{
-		"shop_id":       885,
-		"from_district": 1447,
-		"to_district":   1442,
+		// "shop_id":       885,
+		// "from_district": 1447,
+		// "to_district":   1442,
 	}
 
 	// Create a request body (if needed)
 	// API get list cities of GHN
-	responseGetProvince, err := GetDataFromAPIProvince(fmt.Sprintf("%s/%s", os.Getenv("API_URL"), getProvinceEndPoint), os.Getenv("API_KEY"), requestBodyForGetProvince)
+	responseGetProvince, err := GetDataFromAPIProvince(fmt.Sprintf("%s/%s", os.Getenv("LIVE_GHN_API_URL"), getProvinceEndPoint), os.Getenv("LIVE_GHN_API_KEY"), requestBodyForGetProvince)
 	if err != nil {
 		log.Fatalf("Error fetching data: %v", err)
 	}
@@ -41,7 +41,7 @@ func ProcessInsertAddressInDatabase() {
 		requestBodyForGetDistrict := map[string]interface{}{
 			"province_id": item.ProvinceID,
 		}
-		responseGetDistrict, err := GetDataFromAPIDistrict(fmt.Sprintf("%s/%s", os.Getenv("API_URL"), getDistrictEndPoint), os.Getenv("API_KEY"), requestBodyForGetDistrict)
+		responseGetDistrict, err := GetDataFromAPIDistrict(fmt.Sprintf("%s/%s", os.Getenv("LIVE_GHN_API_URL"), getDistrictEndPoint), os.Getenv("LIVE_GHN_API_KEY"), requestBodyForGetDistrict)
 		if err != nil {
 			log.Fatalf("Error fetching data: %v", err)
 		}
@@ -55,7 +55,7 @@ func ProcessInsertAddressInDatabase() {
 		requestBodyForGetWard := map[string]interface{}{
 			"district_id": item.DistrictID,
 		}
-		responseGetWard, err := GetDataFromAPIWard(fmt.Sprintf("%s/%s", os.Getenv("API_URL"), getWardEndPoint), os.Getenv("API_KEY"), requestBodyForGetWard)
+		responseGetWard, err := GetDataFromAPIWard(fmt.Sprintf("%s/%s", os.Getenv("LIVE_GHN_API_URL"), getWardEndPoint), os.Getenv("LIVE_GHN_API_KEY"), requestBodyForGetWard)
 		if err != nil {
 			log.Fatalf("Error fetching data: %v", err)
 		}
@@ -75,15 +75,15 @@ func ProcessInsertAddressInDatabase() {
 	}
 
 	// GEN INSERT DISTRICT COMMAND
-	err = insertDistrictToMappingTable(db, listDistrictDataAll, listProvinceData)
-	if err != nil {
-		panic(err)
-	}
-
-	// GEN INSERT WARD COMMAND
-	// err = insertWardToMappingTable(db, listWardDataAll, listDistrictDataAll, listProvinceData)
+	// err = insertDistrictToMappingTable(db, listDistrictDataAll, listProvinceData)
 	// if err != nil {
 	// 	panic(err)
 	// }
+
+	// GEN INSERT WARD COMMAND
+	err = insertWardToMappingTable(db, listWardDataAll, listDistrictDataAll, listProvinceData)
+	if err != nil {
+		panic(err)
+	}
 
 }
