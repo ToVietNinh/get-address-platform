@@ -1,11 +1,11 @@
-package main
+package helper
 
 import (
 	"regexp"
 	"strings"
 )
 
-func removeVietnameseDiacritics(input string) string {
+func RemoveVietnameseDiacritics(input string) string {
 	// Create a map to replace diacritic characters with their corresponding non-diacritic characters
 	diacriticsMap := map[rune]rune{
 		'á': 'a', 'à': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a',
@@ -35,21 +35,35 @@ func removeVietnameseDiacritics(input string) string {
 	return strings.Map(replaceDiacritic, input)
 }
 
-func standardizeProvinceName(name string) string {
+func RemoveSpecialCharacters(input string) string {
+	var result strings.Builder
+
+	for _, char := range input {
+		// Check if the character is alphanumeric or whitespace
+		if (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || (char >= '0' && char <= '9') || char == ' ' {
+			result.WriteRune(char)
+		}
+	}
+
+	return result.String()
+}
+
+func StandardizeProvinceName(name string) string {
+	name = strings.ToLower(name)
+
+	name = RemoveVietnameseDiacritics(name)
+
+	name = RemoveSpecialCharacters(name)
 	// Define a regular expression pattern for province names
-	regex := regexp.MustCompile(`(Tỉnh|Thành phố|TP|Tp|tp)\s+`)
+	regex := regexp.MustCompile(`((tinh|thanh pho|tp|thua thien)\s+)|\s+`)
 
 	// Replace matched patterns with an empty string
 	standardizedName := regex.ReplaceAllString(name, "")
 
-	standardizedName = strings.ToLower(standardizedName)
-
-	standardizedName = removeVietnameseDiacritics(standardizedName)
-
 	return standardizedName
 }
 
-func standardizeDistrictName(name string) string {
+func StandardizeDistrictName(name string) string {
 	// Define a regular expression pattern for district names
 	regex := regexp.MustCompile(`(Huyện|Quận|Thị xã|TX|tx|Tx)\s+`)
 
@@ -58,12 +72,12 @@ func standardizeDistrictName(name string) string {
 
 	standardizedName = strings.ToLower(standardizedName)
 
-	standardizedName = removeVietnameseDiacritics(standardizedName)
+	standardizedName = RemoveVietnameseDiacritics(standardizedName)
 
 	return standardizedName
 }
 
-func standardizeWardName(name string) string {
+func StandardizeWardName(name string) string {
 	// Define a regular expression pattern for ward names
 	regex := regexp.MustCompile(`(Phường|Xã|P|p|X|x|XP|xp|Xp)\s+`)
 
@@ -72,7 +86,7 @@ func standardizeWardName(name string) string {
 
 	standardizedName = strings.ToLower(standardizedName)
 
-	standardizedName = removeVietnameseDiacritics(standardizedName)
+	standardizedName = RemoveVietnameseDiacritics(standardizedName)
 
 	return standardizedName
 }

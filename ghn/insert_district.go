@@ -1,9 +1,11 @@
-package main
+package ghn
 
 import (
 	"fmt"
 	"os"
 	"time"
+
+	"GetAddressGHN/helper"
 
 	"gorm.io/gorm"
 )
@@ -40,7 +42,7 @@ func insertDistrictToMappingTable(db *gorm.DB, listDistrictDataAll []District, l
 
 	for _, item := range resultMyAddress {
 		for _, item1 := range listDistrictDataAll {
-			if fmt.Sprintf("%s-%s", standardizeDistrictName(item1.DistrictName), standardizeProvinceName(cityIDToNameMapper[int64(item1.ProvinceID)])) == fmt.Sprintf("%s-%s", standardizeDistrictName(item.Name), standardizeProvinceName(item.CityName)) {
+			if fmt.Sprintf("%s-%s", helper.StandardizeDistrictName(item1.DistrictName), helper.StandardizeProvinceName(cityIDToNameMapper[int64(item1.ProvinceID)])) == fmt.Sprintf("%s-%s", helper.StandardizeDistrictName(item.Name), helper.StandardizeProvinceName(item.CityName)) {
 				queryItem := fmt.Sprintf(`(7, 'GHN', %d, '%d'),`, item.ID, item1.DistrictID)
 				queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
 				fmt.Println(queryCommandToInsertAddress)

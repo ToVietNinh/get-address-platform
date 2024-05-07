@@ -1,4 +1,4 @@
-package main
+package ghn
 
 type District struct {
 	DistrictID      int      `json:"DistrictID"`

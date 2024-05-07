@@ -1,12 +1,19 @@
-package main
+package ghn
 
 import (
+	"GetAddressGHN/helper"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
 	"github.com/joho/godotenv"
+)
+
+const (
+	getProvinceEndPoint = "master-data/province"
+	getDistrictEndPoint = "master-data/district"
+	getWardEndPoint     = "master-data/ward"
 )
 
 func ProcessInsertAddressInDatabase() {
@@ -63,7 +70,7 @@ func ProcessInsertAddressInDatabase() {
 		listWardDataAll = append(listWardDataAll, listWardDataForDistrictItem...)
 	}
 	// Operate with database of fulfillment system
-	db := ConnectToMySQL()
+	db := helper.ConnectToMySQL()
 
 	type ShippingProviderDistrictMapping struct {
 		ID                  int64     `json:"id" mapstructure:"id"`
@@ -74,6 +81,7 @@ func ProcessInsertAddressInDatabase() {
 		UpdatedAt           time.Time `json:"updated_at" mapstructure:"updated_at"`
 	}
 
+	fmt.Println(db)
 	// GEN INSERT DISTRICT COMMAND
 	// err = insertDistrictToMappingTable(db, listDistrictDataAll, listProvinceData)
 	// if err != nil {
@@ -81,9 +89,9 @@ func ProcessInsertAddressInDatabase() {
 	// }
 
 	// GEN INSERT WARD COMMAND
-	err = insertWardToMappingTable(db, listWardDataAll, listDistrictDataAll, listProvinceData)
-	if err != nil {
-		panic(err)
-	}
+	// err = insertWardToMappingTable(db, listWardDataAll, listDistrictDataAll, listProvinceData)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 }

@@ -1,9 +1,11 @@
-package main
+package ghn
 
 import (
 	"fmt"
 	"os"
 	"time"
+
+	"GetAddressGHN/helper"
 
 	"gorm.io/gorm"
 )
@@ -52,8 +54,8 @@ func insertWardToMappingTable(db *gorm.DB, listWardDataAll []Ward, listDistrictD
 
 	for _, item := range resultMyAddress {
 		for _, itemGHN := range listWardDataAll {
-			if fmt.Sprintf("%s-%s-%s", standardizeWardName(itemGHN.WardName), standardizeDistrictName(districtIDToNameMapper[int64(itemGHN.DistrictID)]), standardizeProvinceName(cityIDToNameMapper[districtIDToCityID[int64(itemGHN.DistrictID)]])) ==
-				fmt.Sprintf("%s-%s-%s", standardizeWardName(item.Name), standardizeDistrictName(item.DistrictName), standardizeProvinceName(item.CityName)) {
+			if fmt.Sprintf("%s-%s-%s", helper.StandardizeWardName(itemGHN.WardName), helper.StandardizeDistrictName(districtIDToNameMapper[int64(itemGHN.DistrictID)]), helper.StandardizeProvinceName(cityIDToNameMapper[districtIDToCityID[int64(itemGHN.DistrictID)]])) ==
+				fmt.Sprintf("%s-%s-%s", helper.StandardizeWardName(item.Name), helper.StandardizeDistrictName(item.DistrictName), helper.StandardizeProvinceName(item.CityName)) {
 				queryItem := fmt.Sprintf(`(7, 'GHN', %d, '%s'),`, item.ID, itemGHN.WardCode)
 				queryCommandToInsertAddress = append(queryCommandToInsertAddress, queryItem)
 				fmt.Println("Inprogress")

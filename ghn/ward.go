@@ -1,4 +1,4 @@
-package main
+package ghn
 
 type Ward struct {
 	WardCode      string   `json:"WardCode"`

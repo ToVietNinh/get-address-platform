@@ -1,4 +1,4 @@
-package main
+package ghn
 
 import (
 	"bytes"

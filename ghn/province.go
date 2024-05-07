@@ -1,4 +1,4 @@
-package main
+package ghn
 
 type Province struct {
 	ProvinceID      int      `json:"ProvinceID"`

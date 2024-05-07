@@ -1,11 +1,15 @@
 package main
 
-const (
-	getProvinceEndPoint = "master-data/province"
-	getDistrictEndPoint = "master-data/district"
-	getWardEndPoint     = "master-data/ward"
+import (
+	// "GetAddressGHN/ghn"
+	"GetAddressGHN/ahamove"
+	"log"
 )
 
 func main() {
-	ProcessInsertAddressInDatabase()
+	// ghn.ProcessInsertAddressInDatabase()
+	err := ahamove.ProcessInsertCityInDatabase()
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 }
